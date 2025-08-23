@@ -9,7 +9,7 @@ import crypto from "crypto";
 
 export const register = async (req, res) => {
 try {
-    const{name,email,password}=req.body;
+    const{name,email,password,role}=req.body;
     if(!name||!email||!password){
         return res.status(401).json({
             success:false,
@@ -29,13 +29,20 @@ try {
     const newUser=await new User({
         name,
         email,
-        password:hashedPassword
+        password:hashedPassword,
+        role
     })
     await newUser.save()
     
     res.status(201).json({
         success:true,
-        message:"User Registered Succesfully"
+        message:"User Registered Succesfully",
+        user:{
+            id:newUser._id,
+            name:newUser.name,
+            email:newUser.email,
+            role:newUser.role
+        }
     })
     
 } catch (error) {
@@ -92,7 +99,7 @@ export const login=async(req,res)=>{
         }) 
         }
         // console.log(process.env.JWT_SECRET_KEY)
-        const token= jwt.sign({id:user._id},
+        const token= jwt.sign({id:user._id,role},
             process.env.JWT_SECRET_KEY,{
                 expiresIn:"24h"
             }
@@ -106,7 +113,14 @@ export const login=async(req,res)=>{
         })
         res.status(200).json({
             success:true,
-            message:"User Logged In Successfully"
+            message:"User Logged In Successfully",
+            user:{
+                id:user._id,
+                name:user.name,
+                email:user.email,
+                role:user.role
+
+            }
         })
         } 
         catch (error) {
@@ -133,4 +147,16 @@ export const generateApiKey=async(req,res)=>{
     }
 }
 
-export const getMe=async(req,res)=>{}
+export const getMe=async(req,res)=>{
+    try {
+        const userId = req.user.id; // Assumes user is authenticated and user id is available
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}

@@ -1,4 +1,5 @@
 import User from "../models/user.models.js";
+import jwt from 'jsonwebtoken';
 export const authMiddleware=async(req,res,next)=>{
     try {
         const token=req.cookies.token;
@@ -9,7 +10,7 @@ export const authMiddleware=async(req,res,next)=>{
         })
     }
     const decodedToken=jwt.verify(token,process.env.JWT_SECRET_KEY)
-    console.log(decodedToken);
+    // console.log(decodedToken);
     const user=await User.findById(decodedToken.id)
     req.user=user
     next();

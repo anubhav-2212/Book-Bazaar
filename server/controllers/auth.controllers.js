@@ -6,7 +6,6 @@ import crypto from "crypto";
 
 
 
-
 export const register = async (req, res) => {
 try {
     const{name,email,password,role}=req.body;
@@ -69,7 +68,6 @@ try {
     
 }
 };
-
 export const login=async(req,res)=>{
     const{email,password}=req.body;
     // console.log(email,password)
@@ -99,7 +97,7 @@ export const login=async(req,res)=>{
         }) 
         }
         // console.log(process.env.JWT_SECRET_KEY)
-        const token= jwt.sign({id:user._id,role},
+        const token= jwt.sign({id:user._id,},
             process.env.JWT_SECRET_KEY,{
                 expiresIn:"24h"
             }
@@ -154,7 +152,14 @@ export const getMe=async(req,res)=>{
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
-        res.status(200).json({ success: true, user });
+        res.status(200).json({ success: true, user:{
+            id:user._id,
+            name:user.name,
+            email:user.email,
+            role:user.role,
+            createdAt:user.createdAt,
+        
+        } });
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Internal Server Error" });

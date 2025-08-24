@@ -6,7 +6,7 @@ const bookSchema=new mongoose.Schema({
         required:true,
     },
     author:{
-        typeString,
+        type:String,
         required:true,
     },
     description:{
@@ -19,11 +19,11 @@ const bookSchema=new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true,
+        // required:true,
     },
     rating:{
         type:Number,
-        required:true,
+        // required:true,
     },
     category:{
         type:String,
@@ -31,7 +31,7 @@ const bookSchema=new mongoose.Schema({
     },
     stock:{
         type:Number,
-        required:true,
+        // required:true,
         default:1
     },
 

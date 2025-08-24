@@ -6,9 +6,9 @@ import { authMiddleware } from "../middlewares/auth.middlewares.js";
 const authRoutes=express.Router();
 
 authRoutes.post("/register",register)
-authRoutes.post("/login",authMiddleware,login)
+authRoutes.post("/login",login)
 authRoutes.post("/api-key",authMiddleware,generateApiKey)
-authRoutes.post("/getme",authMiddleware,getMe)
+authRoutes.get("/getme",authMiddleware,getMe)
 
 
 

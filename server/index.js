@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes.js";
 dotenv.config();
 import cookieParser from "cookie-parser";
 import booksRoutes from "./routes/books.routes.js";
+import reviewRoutes from "./routes/reviews.routes.js";
 
 const app=express();
 const port=process.env.PORT||8000
@@ -30,6 +31,7 @@ app.use(cookieParser());
 db();
 app.use('/api/v1/user/auth',authRoutes)
 app.use('/api/v1/books',booksRoutes)
+app.use('/api/v1/books',reviewRoutes)
 
 app.listen(port,()=>{
     console.log(`Server Running at port ${port}`)

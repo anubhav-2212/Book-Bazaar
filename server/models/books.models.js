@@ -34,6 +34,15 @@ const bookSchema=new mongoose.Schema({
         // required:true,
         default:1
     },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
+    },
+    reviews:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Review"
+    }]
 
 }
 ,{timestamps:true})

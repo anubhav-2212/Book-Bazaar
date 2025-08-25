@@ -1,6 +1,7 @@
 import Books from "../models/books.models.js";   
 export const addBooks=async(req,res)=>{
     try {
+        const userId=req.user.id
         const{title,author,description,price,category}=req.body;
     if(!title||!author||!description||!price||!category){
         return res.status(401).json({
@@ -13,7 +14,8 @@ export const addBooks=async(req,res)=>{
         author,
         description,
         price,
-        category
+        category,
+        userId
     })
 
     await newBook.save()

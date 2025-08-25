@@ -4,7 +4,7 @@ import { authMiddleware } from '../middlewares/auth.middlewares.js';
 
 const reviewRoutes=express.Router();
  
-reviewRoutes.post('/review/:bookId',authMiddleware,addReview)
+reviewRoutes.post('/:bookId/review',authMiddleware,addReview)
 reviewRoutes.get('/:bookId/review',authMiddleware,getReview)
 reviewRoutes.delete('review/:id',authMiddleware,deleteReview)
 

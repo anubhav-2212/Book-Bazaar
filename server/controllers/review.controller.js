@@ -1,3 +1,4 @@
+import Books from "../models/books.models.js";
 import Review from "../models/review.models.js";
 export const addReview=async(req,res)=>{
     try {
@@ -20,6 +21,9 @@ export const addReview=async(req,res)=>{
         comment
     })
     await newReview.save()
+    await Books.findByIdAndUpdate(bookId,{
+        $push:{reviews:newReview._id}
+    })
     res.status(201).json({
         success:true,
         message:"Review Added Successfully",
@@ -41,6 +45,26 @@ export const addReview=async(req,res)=>{
     
 
 }
-export const getReview=async(req,res)=>{}
+export const getReview=async(req,res)=>{
+    try {
+         const {bookId}=req.params;
+    console.log(bookId);
+    const userId=req.user.id;
+    console.log(userId);
+
+    const AllReviews=await Books.findById(bookId);
+    console.log(AllReviews)
+
+        
+    } catch (error) {
+        
+    }
+    const {bookId}=req.params;
+    console.log(bookId);
+    const userId=req.user.id;
+    console.log(userId);
+
+
+}
 
 export const deleteReview=async(req,res)=>{}

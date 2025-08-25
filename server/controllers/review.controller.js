@@ -47,23 +47,40 @@ export const addReview=async(req,res)=>{
 }
 export const getReview=async(req,res)=>{
     try {
-         const {bookId}=req.params;
-    console.log(bookId);
-    const userId=req.user.id;
-    console.log(userId);
+          const{bookId}=req.params
+    // console.log(bookId);
+    const userId=req.user.id
+    // console.log(userId)
+//populate converts reviews id in actual review document
+    const allReviews=await Books.findById(bookId).populate({
+    path: "reviews",
+ populate: {
+    path: "userId",   // Review schema me userId ref hoga User model se
+    select: "name email"   // Sirf yeh fields chahiye
+  }})
+    console.log(allReviews);
 
-    const AllReviews=await Books.findById(bookId);
-    console.log(AllReviews)
+    res.status(200).json({
+        success:true,
+        message:"All Reviews",
+        allReviews
+    })
 
         
     } catch (error) {
+        console.log(error)
+         res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error
+        })
+
         
     }
-    const {bookId}=req.params;
-    console.log(bookId);
-    const userId=req.user.id;
-    console.log(userId);
+  
 
+    
+   
 
 }
 

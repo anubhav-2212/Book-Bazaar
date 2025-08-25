@@ -6,7 +6,7 @@ const reviewRoutes=express.Router();
  
 reviewRoutes.post('/:bookId/review',authMiddleware,addReview)
 reviewRoutes.get('/:bookId/review',authMiddleware,getReview)
-reviewRoutes.delete('review/:id',authMiddleware,deleteReview)
+reviewRoutes.delete('/review/:reviewId',authMiddleware,deleteReview)
 
 
 export default reviewRoutes;

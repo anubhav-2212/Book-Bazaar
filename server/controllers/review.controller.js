@@ -1,5 +1,7 @@
 import Books from "../models/books.models.js";
 import Review from "../models/review.models.js";
+
+
 export const addReview=async(req,res)=>{
     try {
         // console.log(req.params);
@@ -58,7 +60,7 @@ export const getReview=async(req,res)=>{
     path: "userId",   // Review schema me userId ref hoga User model se
     select: "name email"   // Sirf yeh fields chahiye
   }})
-    console.log(allReviews);
+    // console.log(allReviews);
 
     res.status(200).json({
         success:true,
@@ -84,4 +86,51 @@ export const getReview=async(req,res)=>{
 
 }
 
-export const deleteReview=async(req,res)=>{}
+
+export const deleteReview=async(req,res)=>{
+    try {
+        // console.log(req.params);
+         const{reviewId}=req.params;
+        //  console.log(reviewId);
+        console.log(req.user.id)
+         if(!reviewId){
+            return res.status(401).json({
+                success:false,
+                message:"Review not found"
+            })
+         }
+         const review=await Review.findById(reviewId)
+         console.log(review.userId.toString())
+        //  console.log(review)
+        if(review.userId.toString()!==req.user.id){
+            return res.status(401).json({
+                success:false,
+                message:"Unauthorized Access"
+
+            })
+        }
+
+         const deletedReview=await Review.findByIdAndDelete(reviewId)
+        //  console.log(deletedReview);
+        //book model se review ko hata diya gya yaha pe
+         await Books.findByIdAndUpdate(review.bookId, { $pull: { reviews: reviewId } });
+         res.status(200).json({
+            success:true,
+            Message:"Review Deleted Succesfully"
+         })
+
+
+         
+        
+    } catch (error) {
+         console.log(error)
+         res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error
+        })
+        
+    }
+    
+
+}

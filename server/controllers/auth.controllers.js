@@ -24,7 +24,7 @@ try {
 
     }
     const hashedPassword=await bcrypt.hash(password,10);
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
     const newUser=await new User({
         name,
         email,

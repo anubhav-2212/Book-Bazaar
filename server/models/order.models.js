@@ -57,10 +57,12 @@ const orderSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    total: { type: Number, required: true },
+    totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['pending', 'completed', 'cancelled'], default: 'pending' },
     
     },
+        
+    
     { timestamps: true }
     );
     

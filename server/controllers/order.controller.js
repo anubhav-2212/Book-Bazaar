@@ -31,5 +31,19 @@ export const addOrder = async (req, res) => {
     }
     
 }
-export const getUserOrder=async(req,res)=>{}
+export const getUserOrder=async(req,res)=>{
+    try {
+        const{userId}=req.user;
+        console.log(userId)
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error
+        })
+        
+    }
+}
 export const getOrdersById=async(req,res)=>{}

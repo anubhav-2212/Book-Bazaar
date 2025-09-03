@@ -69,4 +69,31 @@ export const getUserOrder=async(req,res)=>{
 
    
 }
-export const getOrdersById=async(req,res)=>{}
+export const getOrdersById=async(req,res)=>{
+    const{bookId}=req.params
+    // console.log(bookId)
+    try {
+        const books= await Order.findById(bookId)
+        if(!books){
+            return res.status(400).json({
+                success:false,
+                message:"No Book Found"
+            })
+
+        }
+        res.status(200).json({
+            success:true,
+            message:"Book Found",
+            data:books
+        })
+        
+    } catch (error) {
+         console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error
+        })
+        
+    }
+}

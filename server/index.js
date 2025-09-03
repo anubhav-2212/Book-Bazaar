@@ -26,7 +26,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 
 
-// app.get("/",(req,res)=>{
+// app.get("/",(req,res)=>{x
 //     res.send("Hi")
 // })
 db();

@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema({
             },
             image: {
                 type: String,
-                required: true,
+                // required: true,
             },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -52,7 +52,7 @@ const orderSchema = new mongoose.Schema({
             },
         },
     ],
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
@@ -60,7 +60,13 @@ const orderSchema = new mongoose.Schema({
     totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['pending', 'completed', 'cancelled'], default: 'pending' },
     
+    
+    bookId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Books",
+        required: true,
     },
+},
         
     
     { timestamps: true }

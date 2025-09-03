@@ -1,16 +1,26 @@
+import Order from '../models/order.models.js';
+
 export const addOrder = async (req, res) => {
+    const{id}=req.user;
+    console.log(id);
+
+    
+
     try {
-        const{shippingInfo,orderItems,paymentInfo,totalAmount}=req.body
-    if(!shippingInfo||!orderItems||!paymentInfo||!totalAmount){
-        return res.status(401).json({
+        const{shippingInfo,orderItems,totalAmount,status,bookId}=req.body
+        console.log(shippingInfo,orderItems,status,totalAmount,bookId);
+    if(!shippingInfo||!orderItems||!status||!totalAmount||!bookId){
+        return res.status(400).json({
             success:false,
             message:"Credentails Missing"
         })
     }
-    const newOrder=await new Order({
+    const newOrder=new  Order({
+        userId:id,
+        bookId,
         shippingInfo,
         orderItems,
-        paymentInfo,
+        status,
         totalAmount
     })
     await newOrder.save()
@@ -32,18 +42,6 @@ export const addOrder = async (req, res) => {
     
 }
 export const getUserOrder=async(req,res)=>{
-    try {
-        const{userId}=req.user;
-        console.log(userId)
-        
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            success:false,
-            message:"Internal Server Error",
-            error
-        })
-        
-    }
+   
 }
 export const getOrdersById=async(req,res)=>{}

@@ -5,8 +5,8 @@ import { addOrder, getOrdersById, getUserOrder } from "../controllers/order.cont
 
 const orderRoutes=express.Router();
 
-orderRoutes.post("/order",authMiddleware,addOrder)
+orderRoutes.post("/addorder",authMiddleware,addOrder)
 orderRoutes.get("/orders/:id",authMiddleware,getOrdersById)
-orderRoutes.get("/order",authMiddleware,getUserOrder)
+orderRoutes.get("/allorders",authMiddleware,getUserOrder)
 
 export default orderRoutes  

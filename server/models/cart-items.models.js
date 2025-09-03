@@ -19,7 +19,10 @@ const cartItemsSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
-    
+
 },{
     timestamps:true
 })
+
+const Cart=new mongoose.model('Cart',cartItemsSchema)
+export default Cart;

@@ -86,4 +86,21 @@ export const getCartItems=async(req,res)=>{
         data:cartItems
     })
 }
-export const deleteCartItem=async(req,res)=>{}
+export const deleteCartItem=async(req,res)=>{
+    const{id}=req.user;
+    console.log(id);
+    const {cartItemId}=req.params;
+    console.log(cartItemId);
+    const deletedCartItem=await Cart.findByIdAndDelete(cartItemId)
+    if(!deletedCartItem){
+        return res.status(400).json({
+            success:false,
+            message:"Cart Item Not Found"
+        })
+    }
+    res.status(200).json({
+        success:true,
+        message:"Cart Item Deleted Successfully",
+        data:deletedCartItem
+    })
+}

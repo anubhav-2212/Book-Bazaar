@@ -7,6 +7,6 @@ const cartItemsRoutes=express.Router();
 
 cartItemsRoutes.post("/addcart/:bookId",authMiddleware,addCartItem)
 cartItemsRoutes.get("/getcart",authMiddleware,getCartItems)
-cartItemsRoutes.get("/deletecart",authMiddleware,deleteCartItem)
+cartItemsRoutes.get("/deletecart/:cartItemId",authMiddleware,deleteCartItem)
 
 export default cartItemsRoutes;

@@ -5,7 +5,7 @@ import { authMiddleware } from '../middlewares/auth.middlewares.js';
 
 const cartItemsRoutes=express.Router();
 
-cartItemsRoutes.post("/addcart",authMiddleware,addCartItem)
+cartItemsRoutes.post("/addcart/:bookId",authMiddleware,addCartItem)
 cartItemsRoutes.get("/getcart",authMiddleware,getCartItems)
 cartItemsRoutes.get("/deletecart",authMiddleware,deleteCartItem)
 

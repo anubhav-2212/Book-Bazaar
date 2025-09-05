@@ -2,8 +2,8 @@ import Cart from "../models/cart-items.models.js";
 import Books from "../models/books.models.js";
 
 export const addCartItem=async(req,res)=>{
-    const {userId}=req.user
-    console.log(useId);
+    const {id}=req.user;
+    console.log(id);
     const{bookId,quantity,price}=req.body;
     if(!bookId||!quantity||!price){
         return res.status(400).json({
@@ -12,7 +12,7 @@ export const addCartItem=async(req,res)=>{
         })
     }
     const newCartItem=await new Cart({
-        userId,
+        userId:id,
         bookId,
         quantity,
         price

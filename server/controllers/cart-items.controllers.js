@@ -34,6 +34,29 @@ export const addCartItem=async(req,res)=>{
             message:"Invalid Quantity"
         })
     }
+   
+    const existingCartItem=await Cart.findOne({userId:id,bookId:bookDetails._id})
+    if(existingCartItem){
+
+        
+    const newQuantity=existingCartItem.quantity +quantity;
+    if(newQuantity>bookDetails.stock){
+        return res.status(400).json({
+            success:false,
+            message:"Stock Not Available"
+        })
+    }
+        existingCartItem.quantity=newQuantity
+        await existingCartItem.save();
+        return res.status(200).json({
+            success:true,
+            message:"Cart Item Updated Successfully",
+            data:existingCartItem,
+           
+        })
+       
+    }
+     
     
     const newCartItem=await new Cart({
         userId:id,
